@@ -12,6 +12,8 @@ import DonorDashboard from "./pages/DonorDashboard";
 import ReceiverDashboard from "./pages/ReceiverDashboard";
 import CreateDonationPage from "./pages/CreateDonationPage";
 import NotFoundPage from "./pages/NotFoundPage";
+// 🔹 Import Admin Dashboard page
+import AdminDashboard from "./pages/AdminDashboard";
 
 // 🔹 New imports
 import About from "./pages/About";
@@ -51,6 +53,14 @@ function App() {
               element={
                 <PrivateRoute allowedRoles={["donor"]}>
                   <CreateDonationPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin-dashboard"
+              element={
+                <PrivateRoute allowedRoles={["admin"]}>
+                  <AdminDashboard />
                 </PrivateRoute>
               }
             />

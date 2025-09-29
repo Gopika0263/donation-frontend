@@ -88,6 +88,12 @@ const AppNavbar = () => {
                 <Nav.Link>Receiver Dashboard</Nav.Link>
               </LinkContainer>
             )}
+
+            {user?.role === "admin" && (
+              <LinkContainer to="/admin-dashboard">
+                <Nav.Link>Admin Dashboard</Nav.Link>
+              </LinkContainer>
+            )}
           </Nav>
 
           <Nav>

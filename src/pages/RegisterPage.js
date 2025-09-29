@@ -89,6 +89,7 @@ const RegisterPage = () => {
             <Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
               <option value="donor">Donor</option>
               <option value="receiver">Receiver</option>
+              <option value="admin">admin</option>
             </Form.Select>
           </Form.Group>
 
