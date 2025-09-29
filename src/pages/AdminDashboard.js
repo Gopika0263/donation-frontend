@@ -73,21 +73,26 @@ const AdminDashboard = () => {
                 <td>{d.donor?.name || "Unknown"}</td>
                 <td>{d.receiver?.name || "-"}</td>
                 <td>
-                  <Button
-                    variant="warning"
-                    size="sm"
-                    className="me-2"
-                    onClick={() => updateStatus(d._id, "delivered")}
-                  >
-                    Mark Delivered
-                  </Button>
-                  <Button
-                    variant="success"
-                    size="sm"
-                    onClick={() => updateStatus(d._id, "completed")}
-                  >
-                    Mark Completed
-                  </Button>
+                  {d.status === "pickedUp" && (
+                    <Button
+                      variant="warning"
+                      size="sm"
+                      onClick={() => updateStatus(d._id, "delivered")}
+                    >
+                      Mark Delivered
+                    </Button>
+                  )}
+
+                  {d.status === "delivered" && (
+                    <Button
+                      variant="success"
+                      size="sm"
+                      onClick={() => updateStatus(d._id, "completed")}
+                      className="ms-2"
+                    >
+                      Mark Completed
+                    </Button>
+                  )}
                 </td>
               </tr>
             ))}
