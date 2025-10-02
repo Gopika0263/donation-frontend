@@ -7,20 +7,21 @@ const Footer = () => {
     <footer style={{ background: "#1c1c1c", color: "#fff", padding: "30px 0" }}>
       <Container className="text-center">
         <h5 style={{ marginBottom: "15px", fontWeight: "bold" }}>Contact Us</h5>
+        
         <p style={{ marginBottom: "5px" }}>
           Email:{" "}
           <a
-            href="mailto:gopikakandhan63@gmail.com"
+            href="mailto:foodDonation@gmail.com"
             style={{ color: "#f1f1f1", textDecoration: "none" }}
           >
-            gopikakandhan63@gmail.com
+            foodDonation@gmail.com
           </a>{" "}
           | Phone:{" "}
           <a
-            href="tel:+918015210860"
+            href="tel:+9100000 0000"
             style={{ color: "#f1f1f1", textDecoration: "none" }}
           >
-            +91 80152 10860
+            +91 00000 00000
           </a>
         </p>
         <p style={{ marginBottom: "20px" }}>Address: Chennai, Tamil Nadu</p>

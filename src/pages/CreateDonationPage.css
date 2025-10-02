@@ -1,0 +1,39 @@
+.donation-page {
+  position: relative;
+  min-height: 100vh;
+}
+
+.parallax-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -1;
+  filter: brightness(0.6);
+}
+
+.glass-card {
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 15px;
+  padding: 30px;
+  margin-top: 50px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  animation: fadeInUp 1s ease-in-out;
+}
+
+/* Card fade-in animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

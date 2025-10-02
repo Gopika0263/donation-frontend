@@ -13,7 +13,7 @@ const RegisterPage = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  /* const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
@@ -22,6 +22,34 @@ const RegisterPage = () => {
       navigate("/login");
     } catch (err) {
       setError(err.response?.data?.msg || "Registration failed.");
+    }
+  }; */
+
+  // in src/pages/RegisterPage.jsx (inside handleSubmit)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      const res = await register(name, email, password, role);
+      // backend currently returns { msg: "User registered successfully" }
+      // Accept both cases (msg only) and token+user (if backend later returns)
+      if (res && (res.msg || res.token)) {
+        alert("Registration successful! Please login.");
+        navigate("/login");
+      } else {
+        // fallback success
+        alert("Registration complete. Please login.");
+        navigate("/login");
+      }
+    } catch (err) {
+      console.error("Register error:", err);
+      if (!err.response) {
+        setError("Network error — server not reachable.");
+      } else {
+        setError(
+          err.response.data?.msg || err.message || "Registration failed."
+        );
+      }
     }
   };
 

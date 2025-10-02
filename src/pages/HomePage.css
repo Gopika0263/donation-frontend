@@ -1,0 +1,84 @@
+
+
+
+#impact h3 {
+  color: #ff6b6b;
+  font-size: 2.5rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+#impact p {
+  font-weight: bold;
+  color: #333;
+  margin-top: 5px;
+  font-size: 1.1rem;
+}
+
+
+.carousel-item {
+  min-height: 200px; /* height force pannudhu so text visible aagum */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.testimonial-caption {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+}
+
+.testimonial-caption p {
+  font-size: 1.3rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: #fff;
+}
+
+.testimonial-caption small {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.impact-card {
+  background: #fff3e0;
+  padding: 20px;
+
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.impact-card:hover {
+  transform: translateY(-5px);
+}
+
+.impact-card h3 {
+  color: #ff6b6b;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.impact-card p {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+

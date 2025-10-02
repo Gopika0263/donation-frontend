@@ -44,7 +44,15 @@ const AppNavbar = () => {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
+    <Navbar
+      variant="dark"
+      expand="lg"
+      sticky="top"
+      style={{
+        backdropFilter: "blur(8px)", // Blur effect
+        backgroundColor: "#333", // Solid dark background (change as you want)
+      }}
+    >
       <Container>
         <Navbar.Brand style={{ cursor: "pointer" }} onClick={scrollToTop}>
           Food Donation
@@ -53,26 +61,6 @@ const AppNavbar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <LinkContainer to="/">
-              <Nav.Link onClick={scrollToTop} style={linkStyle}>
-                Home
-              </Nav.Link>
-            </LinkContainer>
-
-            <Nav.Link
-              onClick={() => scrollToSection("features")}
-              style={linkStyle}
-            >
-              Features
-            </Nav.Link>
-
-            <Nav.Link
-              onClick={() => scrollToSection("about")}
-              style={linkStyle}
-            >
-              About
-            </Nav.Link>
-
             {user?.role === "donor" && (
               <>
                 <LinkContainer to="/donor-dashboard">
@@ -108,6 +96,18 @@ const AppNavbar = () => {
               </>
             ) : (
               <>
+                <LinkContainer to="/">
+                  <Nav.Link onClick={scrollToTop} style={linkStyle}>
+                    Home
+                  </Nav.Link>
+                </LinkContainer>
+
+                <Nav.Link
+                  onClick={() => scrollToSection("features")}
+                  style={linkStyle}
+                >
+                  Features
+                </Nav.Link>
                 <LinkContainer to="/login">
                   <Nav.Link>Login</Nav.Link>
                 </LinkContainer>
