@@ -10,6 +10,7 @@ import donatefood from "../assets/donateimage.png";
 import foodfind from "../assets/findfood.png";
 import tracking from "../assets/trackfood.png";
 import "./Login.css";
+import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const HomePage = () => {
   const { user } = useAuth();
@@ -270,6 +271,72 @@ const HomePage = () => {
           Get Involved
         </Button>
       </div>
+      <footer
+        className="botfooter"
+        style={{
+          background: "#1c1c1c",
+          color: "#fff",
+          
+          textAlign: "center",
+          width: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          marginTop: "2100px",
+          objectFit: "cover",
+          zIndex: -1,
+        }}
+      >
+        <h5 style={{ marginBottom: "15px", fontWeight: "bold" }}>Contact Us</h5>
+        <p style={{ marginBottom: "5px" }}>
+          Email:{" "}
+          <a
+            href="mailto:foodDonation@gmail.com"
+            style={{ color: "#f1f1f1", textDecoration: "none" }}
+          >
+            foodDonation@gmail.com
+          </a>{" "}
+          | Phone:{" "}
+          <a
+            href="tel:+9100000 0000"
+            style={{ color: "#f1f1f1", textDecoration: "none" }}
+          >
+            +91 00000 00000
+          </a>
+        </p>
+        <p style={{ marginBottom: "20px" }}>Address: Chennai, Tamil Nadu</p>
+
+        <div style={{ fontSize: "1.5rem", marginBottom: "20px" }}>
+          <a
+            href="https://github.com/Gopika0263"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#fff", margin: "0 15px" }}
+          >
+            <FaGithub />
+          </a>
+          <a
+            href="https://www.instagram.com/_kavidhai__kadal/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#fff", margin: "0 15px" }}
+          >
+            <FaInstagram />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/gopika-k-1067642b9/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#fff", margin: "0 15px" }}
+          >
+            <FaLinkedin />
+          </a>
+        </div>
+
+        <p style={{ fontSize: "14px", margin: 0 }}>
+          © {new Date().getFullYear()} Food Donation App. All Rights Reserved.
+        </p>
+      </footer>
     </div>
   );
 };
