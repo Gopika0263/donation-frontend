@@ -1,30 +1,44 @@
 import React from "react";
-import { Container, Row, Col, Button, Card, Carousel } from "react-bootstrap";
+import { Row, Col, Button, Card, Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import foodHome from "../assets/homep.mp4";
 import CountUp from "react-countup";
+import { useInView } from "react-intersection-observer";
 import "./HomePage.css";
 import donatefood from "../assets/donateimage.png";
 import foodfind from "../assets/findfood.png";
 import tracking from "../assets/trackfood.png";
+import "./Login.css";
+
 const HomePage = () => {
   const { user } = useAuth();
 
+  // Intersection Observer for animation
+  const { ref: impactRef, inView: impactInView } = useInView({
+    triggerOnce: false,
+    threshold: 0.3,
+  });
+
+  const { ref: featuresRef, inView: featuresInView } = useInView({
+    triggerOnce: false,
+    threshold: 0.2,
+  });
+
   return (
     <div>
-      {/* Hero Section */}
-      <Container
-        fluid
+      {/* Hero Section - EDGE TO EDGE VIDEO */}
+      <div
         style={{
-          minHeight: "80vh",
+          width: "100%",
+          height: "85vh",
+          position: "unset",
+          overflow: "hidden",
           display: "flex",
           justifyContent: "center",
           alignItems: "flex-end",
-          padding: 0,
           margin: 0,
-          position: "relative",
-          overflow: "hidden",
+          padding: 0,
         }}
       >
         <video
@@ -38,10 +52,10 @@ const HomePage = () => {
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            zIndex: -999,
+            zIndex: -1,
           }}
         >
-          <source src={foodHome} type="video/mp4" />
+          <source src={foodHome} type="video/mp4" className="vediomine" />
           Your browser does not support the video tag.
         </video>
 
@@ -60,7 +74,7 @@ const HomePage = () => {
                 to="/register"
                 variant="primary"
                 size="lg"
-                className="me-3"
+                className="me-3 login-btn"
               >
                 Get Started (Register)
               </Button>
@@ -76,6 +90,7 @@ const HomePage = () => {
                   to="/create-donation"
                   variant="success"
                   size="lg"
+                  className="login-btn"
                 >
                   Donate Food
                 </Button>
@@ -86,81 +101,111 @@ const HomePage = () => {
                   to="/receiver-dashboard"
                   variant="info"
                   size="lg"
+                  className="login-btn"
                 >
                   Go to Receiver Dashboard
+                </Button>
+              )}
+
+              {user.role === "admin" && (
+                <Button
+                  as={Link}
+                  to="/admin-dashboard"
+                  variant="info"
+                  size="lg"
+                  className="login-btn"
+                >
+                  Go to Admin Dashboard
                 </Button>
               )}
             </>
           )}
         </div>
-      </Container>
+      </div>
 
       {/* Features Section */}
-      <Container id="features" className="my-5 text-center">
+      <div id="features" className="my-5 text-center" ref={featuresRef}>
         <h2>Features</h2>
         <Row className="g-4 mt-3">
-          <Col md={4}>
+          <Col
+            md={4}
+            className={`feature-card ${featuresInView ? "in-view" : ""}`}
+          >
             <Card className="dark-card">
-              <Card.Img variant="top" src={donatefood} alt="Easy Donation" />
+              <Card.Img variant="top" src={donatefood} />
               <Card.Body>
                 <Card.Title>Easy Donation</Card.Title>
-                <Card.Text>
-                  Post surplus food and help reduce waste easily.
-                </Card.Text>
+                <Card.Text>Post surplus food easily.</Card.Text>
               </Card.Body>
             </Card>
           </Col>
-          <Col md={4}>
+
+          <Col
+            md={4}
+            className={`feature-card ${featuresInView ? "in-view" : ""}`}
+          >
             <Card className="dark-card">
-              <Card.Img variant="top" src={foodfind} alt="Find Food" />
+              <Card.Img variant="top" src={foodfind} />
               <Card.Body>
                 <Card.Title>Find Food</Card.Title>
-                <Card.Text>
-                  Receivers can quickly locate available food nearby.
-                </Card.Text>
+                <Card.Text>Locate available food nearby.</Card.Text>
               </Card.Body>
             </Card>
           </Col>
-          <Col md={4}>
+
+          <Col
+            md={4}
+            className={`feature-card ${featuresInView ? "in-view" : ""}`}
+          >
             <Card className="dark-card">
-              <Card.Img variant="top" src={tracking} alt="Track Donations" />
+              <Card.Img variant="top" src={tracking} className="gk" />
               <Card.Body>
                 <Card.Title>Track Donations</Card.Title>
-                <Card.Text>
-                  Real-time status tracking for both donors and receivers.
-                </Card.Text>
+                <Card.Text>Real-time status tracking.</Card.Text>
               </Card.Body>
             </Card>
           </Col>
         </Row>
-      </Container>
+      </div>
 
-      <Container id="impact" className="my-5 text-center">
+      {/* Impact Section */}
+      <div id="impact" className="my-5 text-center" ref={impactRef}>
         <h2>Our Impact</h2>
         <Row className="mt-4 justify-content-center">
-          <Col md={3} className="impact-card mx-2">
-            <h3>
-              <CountUp end={1200} duration={3} />+
+          <Col
+            md={3}
+            className={`impact-card ${impactInView ? "in-view" : ""}`}
+          >
+            <h3 className={impactInView ? "pulse-1200" : ""}>
+              {impactInView ? <CountUp end={1200} duration={3} /> : 0}+
             </h3>
             <p>Meals Donated</p>
           </Col>
-          <Col md={3} className="impact-card mx-2">
-            <h3>
-              <CountUp end={300} duration={3} />+
+
+          <Col
+            md={3}
+            className={`impact-card ${impactInView ? "in-view" : ""}`}
+          >
+            <h3 className={impactInView ? "pulse-300" : ""}>
+              {impactInView ? <CountUp end={300} duration={3} /> : 0}+
             </h3>
             <p>Donors</p>
           </Col>
-          <Col md={3} className="impact-card mx-2">
-            <h3>
-              <CountUp end={500} duration={3} />+
+
+          <Col
+            md={3}
+            className={`impact-card ${impactInView ? "in-view" : ""}`}
+          >
+            <h3 className={impactInView ? "pulse-500" : ""}>
+              {impactInView ? <CountUp end={500} duration={3} /> : 0}+
             </h3>
             <p>Receivers</p>
           </Col>
         </Row>
-      </Container>
+      </div>
 
       {/* How It Works Section */}
-      <Container className="my-5">
+      <div className="my-5">
         <h2 className="text-center">How It Works</h2>
         <Row className="mt-4">
           <Col md={4}>
@@ -188,10 +233,10 @@ const HomePage = () => {
             </Card>
           </Col>
         </Row>
-      </Container>
+      </div>
 
-      {/* Testimonials Section - Carousel */}
-      <Container className="my-5">
+      {/* Testimonials Section */}
+      <div className="my-5">
         <h2 className="text-center mb-4">Testimonials</h2>
         <Carousel interval={5000} indicators={false}>
           <Carousel.Item>
@@ -215,16 +260,16 @@ const HomePage = () => {
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
-      </Container>
+      </div>
 
       {/* Call to Action */}
-      <Container className="my-5 text-center">
+      <div className="my-5 text-center">
         <h2>Join Us in Fighting Hunger</h2>
         <p>Be part of the movement. Donate or receive food today.</p>
         <Button as={Link} to="/register" variant="danger" size="lg">
           Get Involved
         </Button>
-      </Container>
+      </div>
     </div>
   );
 };

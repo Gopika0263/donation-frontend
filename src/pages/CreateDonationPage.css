@@ -13,12 +13,12 @@
   background-position: center;
   background-attachment: fixed;
   z-index: -1;
-  filter: brightness(0.6);
+  
 }
 
 .glass-card {
   backdrop-filter: blur(8px);
-  background: rgba(255, 255, 255, 0.25);
+  background: rgb(185, 183, 183);
   border-radius: 15px;
   padding: 30px;
   margin-top: 50px;

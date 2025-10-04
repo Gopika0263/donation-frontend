@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import foodlogin from "../assets/login.jpeg";
+import foodlogin from "../assets/login.jpg";
+import "./Login.css";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -13,19 +14,7 @@ const RegisterPage = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
 
-  /* const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    try {
-      await register(name, email, password, role);
-      alert("Registration successful! Please login.");
-      navigate("/login");
-    } catch (err) {
-      setError(err.response?.data?.msg || "Registration failed.");
-    }
-  }; */
-
-  // in src/pages/RegisterPage.jsx (inside handleSubmit)
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -54,25 +43,32 @@ const RegisterPage = () => {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundImage: `url(${foodlogin})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+   <div
+  style={{
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundImage: `url(${foodlogin})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }}
+>
+
       <Container
         className="mt-5"
         style={{
           maxWidth: "500px",
-          backgroundColor: "rgba(255, 255, 255, 0.85)",
+          backgroundColor: "rgba(232, 230, 230, 0.5)",
           padding: "2rem",
           borderRadius: "8px",
           boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+          marginTop: "80px",
         }}
       >
         <h2>Register</h2>
@@ -120,8 +116,8 @@ const RegisterPage = () => {
               <option value="admin">admin</option>
             </Form.Select>
           </Form.Group>
-
-          <Button variant="primary" type="submit" className="w-100">
+<br></br>
+          <Button variant="primary" type="submit" className="w-100 login-btn">
             Register
           </Button>
         </Form>

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import foodlogin from "../assets/login.jpeg";
+import foodlogin from "../assets/login.jpg";
+import "./Login.css";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -33,10 +34,15 @@ const LoginPage = () => {
   return (
     <div
       style={{
-        minHeight: "100vh",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
         backgroundImage: `url(${foodlogin})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -45,7 +51,7 @@ const LoginPage = () => {
       <Container
         style={{
           maxWidth: "400px",
-          backgroundColor: "rgba(255, 255, 255, 0.85)",
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
           padding: "2rem",
           borderRadius: "8px",
           boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
@@ -68,6 +74,7 @@ const LoginPage = () => {
           <Form.Group className="mb-3" controlId="formPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control
+              className=" form-control"
               type="password"
               placeholder="Enter your password"
               value={password}
@@ -75,8 +82,9 @@ const LoginPage = () => {
               required
             />
           </Form.Group>
+          <br></br>
 
-          <Button variant="primary" type="submit" className="w-100">
+          <Button variant="primary" type="submit" className="w-100 login-btn">
             Login
           </Button>
         </Form>

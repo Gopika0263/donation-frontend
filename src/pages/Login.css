@@ -1,0 +1,173 @@
+.login-btn {
+  color: white;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: linear-gradient(90deg, #0d6efd, #6017d7);
+  animation: pulse 2s infinite; /* continuous pulse */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #6610f2, #0d6efd);
+  transition: left 0.4s ease;
+  z-index: -1;
+}
+
+.login-btn:hover::before {
+  left: 0; /* gradient slide */
+}
+
+.login-btn:hover {
+  transform: scale(1.08); /* zoom */
+  box-shadow: 0 0 25px rgba(102, 16, 242, 0.8); /* stronger glow */
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(13, 110, 253, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+  }
+}
+
+/* Input hover animation */
+.form-control {
+  transition: all 0.3s ease; /* smooth animation */
+  border: 2px solid #ccc; /* default border */
+  border-radius: 6px;
+}
+
+.form-control:focus,
+.form-control:hover {
+  border-color: #928e90; /* pink border on hover/focus */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6); /* glow effect */
+  transform: scale(1.02); /* slight zoom */
+}
+
+#impact .row {
+  display: flex;
+  justify-content: center;
+  gap: 50px; /* space between circles */
+  flex-wrap: wrap; /* responsive wrap */
+}
+
+.impact-card {
+  width: 150px;
+  height: 150px;
+  border: rgb(40, 39, 39);
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+  background-color: white;
+  border-radius: 50%;
+  
+}
+
+.impact-card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(255, 95, 158, 0.5),
+    0 0 15px rgba(166, 77, 255, 0.5);
+}
+
+.impact-card h3 {
+  font-size: 2rem;
+  margin: 0;
+  color: #ff5f9e;
+  transition: transform 0.5s ease, opacity 0.5s ease, text-shadow 0.5s ease;
+  transform: scale(0.8);
+  opacity: 0;
+ 
+}
+
+/* In-view animation */
+.impact-card.in-view h3 {
+  transform: scale(1);
+  opacity: 1;
+  
+}
+
+
+/* Pulse for 1200+ */
+.pulse-1200 {
+  animation: pulse1 2s infinite;
+}
+
+/* Pulse for 300+ */
+.pulse-300 {
+  animation: pulse2 1.8s infinite;
+}
+
+/* Pulse for 500+ */
+.pulse-500 {
+  animation: pulse3 2.2s infinite;
+}
+
+@keyframes pulse1 {
+  0%,
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 5px #e0d5d9, 0 0 10px #aaa5af;
+  }
+  50% {
+    transform: scale(1.1);
+    text-shadow: 0 0 5px #e0d5d9, 0 0 10px #aaa5af;
+  }
+}
+
+@keyframes pulse2 {
+  0%,
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 5px #e0d5d9, 0 0 10px #aaa5af;
+  }
+  50% {
+    transform: scale(1.15);
+    text-shadow: 0 0 5px #e0d5d9, 0 0 10px #aaa5af;
+  }
+}
+
+@keyframes pulse3 {
+  0%,
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 5px #e0d5d9, 0 0 10px #aaa5af;
+  }
+  50% {
+    transform: scale(1.12);
+    text-shadow: 0 0 5px #e0d5d9, 0 0 10px #aaa5af;
+  }
+}
+
+.btn-danger {
+  animation: glowPulse 2s infinite;
+}
+
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 5px #ff4d4d;
+  }
+  50% {
+    box-shadow: 0 0 20px #ff4d4d;
+  }
+  100% {
+    box-shadow: 0 0 5px #ff4d4d;
+  }
+}
+
+/* HomePage.css */

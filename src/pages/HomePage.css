@@ -1,12 +1,17 @@
-
-
-
 #impact h3 {
   color: #ff6b6b;
   font-size: 2.5rem;
   font-weight: bold;
   transition: all 0.3s ease;
 }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  height: "100vh"
+
+}
+
 
 #impact p {
   font-weight: bold;
@@ -14,7 +19,6 @@
   margin-top: 5px;
   font-size: 1.1rem;
 }
-
 
 .carousel-item {
   min-height: 200px; /* height force pannudhu so text visible aagum */
@@ -24,13 +28,19 @@
 }
 
 .testimonial-caption {
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 10px;
-  padding: 20px;
+  background: rgba(0, 0, 0, 0.8); /* make more opaque */
+  border-radius: 15px;
+  padding: 25px 30px;
   max-width: 600px;
   margin: auto;
   text-align: center;
+ 
+  position: relative;
+  z-index: 2;
+
+
 }
+
 
 .testimonial-caption p {
   font-size: 1.3rem;
@@ -47,30 +57,13 @@
 }
 
 .impact-card {
-  background: #fff3e0;
+  background-color: white;
   padding: 20px;
 
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s;
 }
-
-.impact-card:hover {
-  transform: translateY(-5px);
-}
-
-.impact-card h3 {
-  color: #ff6b6b;
-  font-size: 2.5rem;
-  font-weight: bold;
-}
-
-.impact-card p {
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: #333;
-}
-
 .card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
@@ -79,6 +72,61 @@
 .card:hover {
   transform: translateY(-10px);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Base state: hidden & small (for scroll animation) */
+.feature-card .dark-card {
+  opacity: 0;
+  transform: scale(0.5) translateY(20px);
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+
+/* Scroll into view: zoom + slide up */
+.feature-card.in-view .dark-card {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Optional stagger for multiple cards */
+.feature-card.in-view .dark-card:nth-child(1) {
+  transition-delay: 0s;
+}
+.feature-card.in-view .dark-card:nth-child(2) {
+  transition-delay: 0.2s;
+}
+.feature-card.in-view .dark-card:nth-child(3) {
+  transition-delay: 0.4s;
+}
+
+.feature-card .dark-card img {
+  border-radius: inherit; /* inherit from parent */
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* Hover animation: zoom + lift + glowing shadow (like Impact) */
+.feature-card .dark-card:hover {
+  transform: scale(1.0) translateY(-9px);
+  box-shadow: 0 15px 30px rgba(78, 74, 76, 0.5),
+    0 0 20px rgba(34, 32, 35, 0.5);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 45px 0px 45px 0px ;
+}
+
+.feature-card .dark-card:hover h5,
+.feature-card .dark-card:hover p {
+  animation: pulseHover 1.2s infinite;
+}
+
+@keyframes pulseHover {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 

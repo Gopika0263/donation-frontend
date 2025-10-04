@@ -62,7 +62,7 @@ const ReceiverDashboard = () => {
 
   if (loading) return <LoadingSpinner />;
 
-  // Filter donations based on status and search
+  // Filter donations by search + sort only
   const filteredDonations = (donations) =>
     donations
       .filter((donation) => {
@@ -75,11 +75,7 @@ const ReceiverDashboard = () => {
           donation.donor?.name
             ?.toLowerCase()
             .includes(searchText.toLowerCase());
-
-        const statusMatch =
-          statusFilter === "all" || donation.status === statusFilter;
-
-        return searchMatch && statusMatch;
+        return searchMatch;
       })
       .sort((a, b) => {
         if (sortBy === "newest")
@@ -89,9 +85,12 @@ const ReceiverDashboard = () => {
         return 0;
       });
 
-  // 2️⃣ Delivered donations filter
-  const deliveredDonations = filteredDonations(myClaims).filter(
-    (d) => d.status === "delivered"
+  // Filter by status separately
+  const availableDonationsFiltered = filteredDonations(
+    availableDonations
+  ).filter((d) => d.status === "available");
+  const pickupDonations = filteredDonations(myClaims).filter(
+    (d) => d.status === "pickedUp"
   );
   const claimedDonations = filteredDonations(myClaims).filter(
     (d) => d.status === "claimed"
@@ -99,13 +98,20 @@ const ReceiverDashboard = () => {
   const completedDonations = filteredDonations(myClaims).filter(
     (d) => d.status === "completed"
   );
-  const availableDonationsFiltered = filteredDonations(
-    availableDonations
-  ).filter((d) => d.status === "available");
+  const deliveredDonations = filteredDonations(myClaims).filter(
+    (d) => d.status === "delivered"
+  );
 
   const renderDonationCard = (donation, isClaimed = false) => (
     <Col key={donation._id}>
       <Card className="shadow-sm">
+        {donation.image && (
+          <Card.Img
+            variant="top"
+            src={donation.image}
+            style={{ height: "200px", objectFit: "cover" }}
+          />
+        )}
         <Card.Body>
           <Card.Title>
             <FaUtensils className="me-2" /> {donation.foodType}
@@ -142,6 +148,7 @@ const ReceiverDashboard = () => {
               <FaClock className="me-2" /> Status: {donation.status}
             </p>
           </Card.Text>
+
           {donation.status === "available" && (
             <Button variant="primary" onClick={() => handleClaim(donation._id)}>
               Claim Donation
@@ -167,10 +174,17 @@ const ReceiverDashboard = () => {
     <div
       style={{
         backgroundImage: `url(${receive})`,
+        position: "fixed", // fix to full viewport
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        marginTop: "50px", // adjust for navbar height
         backgroundSize: "cover",
         backgroundPosition: "center",
-        minHeight: "100vh",
-        padding: "40px 20px",
+        backgroundRepeat: "no-repeat",
+        overflowY: "auto", // allow scrolling inside content
+        padding: "20px",
       }}
     >
       <Container
@@ -179,6 +193,7 @@ const ReceiverDashboard = () => {
           backgroundColor: "rgba(255, 255, 255, 0.5)",
           borderRadius: "15px",
           padding: "30px",
+          marginTop: "20px",
         }}
       >
         <h2>Receiver Dashboard</h2>
@@ -203,11 +218,12 @@ const ReceiverDashboard = () => {
           >
             <option value="all">All Status</option>
             <option value="available">Available</option>
+            <option value="pickup">Pickup</option>
             <option value="claimed">Claimed</option>
             <option value="completed">Completed</option>
             <option value="delivered">Delivered</option>
-            select
           </select>
+
           <select
             className="form-select mb-2"
             value={sortBy}
@@ -219,61 +235,48 @@ const ReceiverDashboard = () => {
           </select>
         </div>
 
-        {/* Claimed Donations */}
-        {statusFilter === "claimed" && (
-          <>
-            <h3>My Claimed Donations ({claimedDonations.length})</h3>
-            {claimedDonations.length === 0 ? (
-              <Alert variant="info">
-                No claimed donations match your search/filter.
-              </Alert>
-            ) : (
-              <Row xs={1} md={2} lg={3} className="g-4">
-                {claimedDonations.map((d) => renderDonationCard(d, true))}
-              </Row>
-            )}
-          </>
-        )}
-
-        {/* Completed Donations */}
-        {statusFilter === "completed" && (
-          <>
-            <h3>My Completed Donations ({completedDonations.length})</h3>
-            {completedDonations.length === 0 ? (
-              <Alert variant="info">
-                No completed donations match your search/filter.
-              </Alert>
-            ) : (
-              <Row xs={1} md={2} lg={3} className="g-4">
-                {completedDonations.map((d) => renderDonationCard(d, true))}
-              </Row>
-            )}
-          </>
-        )}
-
-        {/* Available Donations */}
-        {statusFilter === "available" && (
+        {/* Sections */}
+        {statusFilter === "all" && (
           <>
             <h3>Available Donations ({availableDonationsFiltered.length})</h3>
             {availableDonationsFiltered.length === 0 ? (
-              <Alert variant="info">
-                No available donations match your search/filter.
-              </Alert>
+              <Alert variant="info">No available donations found.</Alert>
             ) : (
               <Row xs={1} md={2} lg={3} className="g-4">
                 {availableDonationsFiltered.map((d) => renderDonationCard(d))}
               </Row>
             )}
-          </>
-        )}
 
-        {statusFilter === "delivered" && (
-          <>
+            <h3>Pickup Donations ({pickupDonations.length})</h3>
+            {pickupDonations.length === 0 ? (
+              <Alert variant="info">No pickup donations found.</Alert>
+            ) : (
+              <Row xs={1} md={2} lg={3} className="g-4">
+                {pickupDonations.map((d) => renderDonationCard(d, true))}
+              </Row>
+            )}
+
+            <h3>My Claimed Donations ({claimedDonations.length})</h3>
+            {claimedDonations.length === 0 ? (
+              <Alert variant="info">No claimed donations found.</Alert>
+            ) : (
+              <Row xs={1} md={2} lg={3} className="g-4">
+                {claimedDonations.map((d) => renderDonationCard(d, true))}
+              </Row>
+            )}
+
+            <h3>My Completed Donations ({completedDonations.length})</h3>
+            {completedDonations.length === 0 ? (
+              <Alert variant="info">No completed donations found.</Alert>
+            ) : (
+              <Row xs={1} md={2} lg={3} className="g-4">
+                {completedDonations.map((d) => renderDonationCard(d, true))}
+              </Row>
+            )}
+
             <h3>My Delivered Donations ({deliveredDonations.length})</h3>
             {deliveredDonations.length === 0 ? (
-              <Alert variant="info">
-                No delivered donations match your search/filter.
-              </Alert>
+              <Alert variant="info">No delivered donations found.</Alert>
             ) : (
               <Row xs={1} md={2} lg={3} className="g-4">
                 {deliveredDonations.map((d) => renderDonationCard(d, true))}
@@ -282,39 +285,32 @@ const ReceiverDashboard = () => {
           </>
         )}
 
-        {/* If All selected, show all sections */}
-        {statusFilter === "all" && (
+        {/* Specific Status Filter */}
+        {statusFilter !== "all" && (
           <>
-            <h3>Available Donations ({availableDonationsFiltered.length})</h3>
-            {availableDonationsFiltered.length === 0 ? (
-              <Alert variant="info">
-                No available donations match your search/filter.
-              </Alert>
-            ) : (
+            {statusFilter === "available" && (
               <Row xs={1} md={2} lg={3} className="g-4">
                 {availableDonationsFiltered.map((d) => renderDonationCard(d))}
               </Row>
             )}
-
-            <h3>My Claimed Donations ({claimedDonations.length})</h3>
-            {claimedDonations.length === 0 ? (
-              <Alert variant="info">
-                No claimed donations match your search/filter.
-              </Alert>
-            ) : (
+            {statusFilter === "pickup" && (
+              <Row xs={1} md={2} lg={3} className="g-4">
+                {pickupDonations.map((d) => renderDonationCard(d, true))}
+              </Row>
+            )}
+            {statusFilter === "claimed" && (
               <Row xs={1} md={2} lg={3} className="g-4">
                 {claimedDonations.map((d) => renderDonationCard(d, true))}
               </Row>
             )}
-
-            <h3>My Completed Donations ({completedDonations.length})</h3>
-            {completedDonations.length === 0 ? (
-              <Alert variant="info">
-                No completed donations match your search/filter.
-              </Alert>
-            ) : (
+            {statusFilter === "completed" && (
               <Row xs={1} md={2} lg={3} className="g-4">
                 {completedDonations.map((d) => renderDonationCard(d, true))}
+              </Row>
+            )}
+            {statusFilter === "delivered" && (
+              <Row xs={1} md={2} lg={3} className="g-4">
+                {deliveredDonations.map((d) => renderDonationCard(d, true))}
               </Row>
             )}
           </>

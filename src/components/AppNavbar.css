@@ -1,0 +1,8 @@
+/* AppNavbar.css or your CSS file */
+.navlink-white {
+  color: white !important;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-right: 1rem;
+  transition: color 0.3s;
+}

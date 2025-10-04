@@ -31,6 +31,7 @@ const CreateDonationPage = () => {
   const [cookedTime, setCookedTime] = useState("");
   const [location, setLocation] = useState("");
   const [organization, setOrganization] = useState("");
+  const [image, setImage] = useState(null);
 
   const [toastMessage, setToastMessage] = useState("");
   const [toastVariant, setToastVariant] = useState("success");
@@ -42,28 +43,33 @@ const CreateDonationPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Backend JWT middleware-la irundhu donor id automatic save aagum
-      const res = await authAxios.post("/donations", {
-        foodType,
-        quantity,
-        pickupAddress,
-        phone,
-        expiry,
-        cookedTime,
-        location,
-        organization,
+      const formData = new FormData();
+      formData.append("foodType", foodType);
+      formData.append("quantity", quantity);
+      formData.append("pickupAddress", pickupAddress);
+      formData.append("phone", phone);
+      formData.append("expiry", expiry);
+      formData.append("cookedTime", cookedTime);
+      formData.append("location", location);
+      formData.append("organization", organization);
+      if (image) formData.append("image", image); // ✅ use 'image' state, not 'imageFile'
+
+      const res = await authAxios.post("/donations", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
       setToastMessage("Donation created successfully!");
       setToastVariant("success");
       setShowToast(true);
 
-      // Navigate to dashboard
+      // ✅ navigate with the response data
       navigate("/donor-dashboard", {
         state: { newDonation: res.data.donation },
       });
     } catch (err) {
-      setToastMessage(err.response?.data?.msg || "Failed to create donation.");
+      setToastMessage(
+        err.response?.data?.message || "Failed to create donation."
+      ); // use 'message' from backend
       setToastVariant("danger");
       setShowToast(true);
     }
@@ -73,7 +79,20 @@ const CreateDonationPage = () => {
     <div className="donation-page">
       <div
         className="parallax-bg"
-        style={{ backgroundImage: `url(${createDonationBg})` }}
+        style={{
+          backgroundImage: `url(${createDonationBg})`,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       />
       <Container className="position-relative">
         <Row className="justify-content-center">
@@ -143,6 +162,7 @@ const CreateDonationPage = () => {
                       type="datetime-local"
                       value={expiry}
                       onChange={(e) => setExpiry(e.target.value)}
+                      required
                     />
                   </InputGroup>
                 </Form.Group>
@@ -157,6 +177,7 @@ const CreateDonationPage = () => {
                       type="datetime-local"
                       value={cookedTime}
                       onChange={(e) => setCookedTime(e.target.value)}
+                      required
                     />
                   </InputGroup>
                 </Form.Group>
@@ -205,6 +226,15 @@ const CreateDonationPage = () => {
                       required
                     />
                   </InputGroup>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Upload Image</Form.Label>
+                  <Form.Control
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setImage(e.target.files[0])}
+                  />
                 </Form.Group>
 
                 <Button type="submit" className="w-100" variant="primary">
